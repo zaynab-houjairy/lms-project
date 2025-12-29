@@ -26,7 +26,13 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
             margin-bottom: 20px;
         }
-
+        .btn-courses{
+            background: #ff6f61;
+            color: #fff;
+        }
+        .btn-courses.hover{
+            background: #ff3b2f;
+        }
         .btn-logout {
             background: #764ba2;
             color: #fff;
@@ -57,18 +63,19 @@
 </nav>
 
 <div class="container mt-4">
-    <h2>Welcome, {{ Auth::user()->sname }}</h2>
-
+<h2>Welcome, {{ session('student')->sname ?? 'Student' }}</h2>
     <div class="row">
-        <!-- Profile Card -->
         <div class="col-md-6">
             <div class="card p-3">
                 <h5>Profile Information</h5>
-                <p><strong>ID:</strong> {{ Auth::user()->sid }}</p>
-                <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
-                <p><strong>Phone:</strong> {{ Auth::user()->phone }}</p>
-                <p><strong>Address:</strong> {{ Auth::user()->address }}</p>
-                <p><strong>Year Level:</strong> {{ Auth::user()->yearLevel }}</p>
+
+
+<p><strong>ID:</strong> {{ session('student')->sid ?? '' }}</p>
+<p><strong>Email:</strong> {{ session('student')->email ?? '' }}</p>
+<p><strong>Phone:</strong> {{ session('student')->phone ?? '' }}</p>
+<p><strong>Address:</strong> {{ session('student')->address ?? '' }}</p>
+<p><strong>Year Level:</strong> {{ session('student')->yearLevel ?? '' }}</p>
+<a href="{{ route('student.courses')}}" class="btn btn-courses mt-3">View My Courses</a>
             </div>
         </div>
     </div>

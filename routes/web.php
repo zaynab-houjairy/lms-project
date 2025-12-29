@@ -2,8 +2,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentDashboardController;
 use App\Http\Controllers\TeacherDashboardController;
+use App\Http\Controllers\StudentCourseController;
+use Illuminate\Support\Facades\Route;
 
-// الصفحة الرئيسية
 Route::get('/', fn() => view('welcome'));
 
 // ----- Login -----
@@ -19,8 +20,11 @@ Route::get('/register/teacher', [AuthController::class, 'showTeacherRegister'])-
 Route::post('/register/teacher', [AuthController::class, 'registerTeacher'])->name('register.teacher.post');
 
 // ----- Dashboards -----
-Route::get('/student/dashboard', [StudentDashboardController::class, 'index'])->name('student.dashboard');
-Route::get('/teacher/dashboard', [TeacherDashboardController::class, 'index'])->name('teacher.dashboard');
-
+Route::get('/student/dashboard', fn() => view('auth.student-dashboard'))->name('student.dashboard');
+Route::get('/teacher/dashboard', fn() => view('auth.teacher-dashboard'))->name('teacher.dashboard');
 // ----- Logout -----
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// ----- Course Details ----
+Route::get('/student/courses', [StudentCourseController::class, 'index'])->name('student.courses');
+Route::get('/student/courses/{id}', [StudentCourseController::class, 'show'])->name('student.course.detail');

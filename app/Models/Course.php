@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
     }
     public function students()
     {
-        return $this->belongsToMany(Student::class, 'enrollments', 'cid', 'sid')
+        return $this->belongsToMany(Student::class, 'enrollment', 'cid', 'sid')
                     ->withTimestamps(); 
     }
     public function assignments()

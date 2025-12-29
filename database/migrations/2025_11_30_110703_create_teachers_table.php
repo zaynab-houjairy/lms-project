@@ -6,26 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
  public function up(): void
     {
         Schema::create('teachers', function (Blueprint $table) {
-            $table->char('tid', 5)->primary();          // مفتاح أساسي
-            $table->string('tname', 30);                 // اسم المعلم
-            $table->string('phone', 24)->nullable();    // رقم الهاتف اختياري
-            $table->string('email', 50)->unique();      // البريد الإلكتروني فريد
-            $table->string('address', 100)->nullable(); // العنوان اختياري
+            $table->char('tid', 5)->primary();       
+            $table->string('tname', 30);              
+            $table->string('phone', 24)->nullable();   
+            $table->string('email', 50)->unique();      
+            $table->string('address', 100)->nullable(); 
             $table->string('specialization', 50)->nullable();
-            $table->string('password',255); // التخصص اختياري
-            $table->timestamps();                       // created_at و updated_at
+            $table->string('password',255); 
+            $table->timestamps();                       
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('teachers');

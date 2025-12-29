@@ -6,12 +6,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Student extends Authenticatable
 {
-    protected $table = 'students';    // اسم جدول الطلاب
-    protected $primaryKey = 'sid';     // primary key
-    public $incrementing = false;      // لأنه char/string
-    protected $keyType = 'string';     // نوع المفتاح string
+    protected $table = 'students';    
+    protected $primaryKey = 'sid';     
+    public $incrementing = false;      
+    protected $keyType = 'string';    
 
-    // الأعمدة المسموح بالملء الجماعي
     protected $fillable = [
         'sid',
         'sname',
@@ -19,17 +18,15 @@ class Student extends Authenticatable
         'email',
         'address',
         'yearLevel',
-        'password',   // ضروري عشان Auth
+        'password',   
     ];
 
-    // الأعمدة المخفية (password)
     protected $hidden = [
         'password',
     ];
 
-    // Relations (اختياري حسب المشروع)
     public function courses(){
-        return $this->belongsToMany(Course::class, 'enrollments', 'sid', 'cid');
+        return $this->belongsToMany(Course::class, 'enrollment', 'sid', 'cid');
     }
 
     public function assignments(){

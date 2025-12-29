@@ -8,6 +8,6 @@ class StudentDashboardController extends Controller
 {
     public function index()
     {
-        return view('student.dashboard');
+        return view('auth.student-dashboard');
     }
 }

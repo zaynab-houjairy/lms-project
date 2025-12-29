@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // عرض صفحة تسجيل الدخول
+
     public function showLogin()
     {
         return view('auth.login');
     }
 
-    // تسجيل الدخول
+
     public function login(Request $request)
     {
         $request->validate([
@@ -24,37 +24,38 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        // تسجيل دخول المدرس
         $teacher = Teacher::where('email', $request->email)->first();
         if ($teacher && Hash::check($request->password, $teacher->password)) {
-            Auth::login($teacher);
+             session()->put('teacher', $teacher);
             return redirect()->route('teacher.dashboard');
         }
 
-        // تسجيل دخول الطالب
         $student = Student::where('email', $request->email)->first();
         if ($student && Hash::check($request->password, $student->password)) {
-            Auth::login($student);
+
+            session(['student' => $student]);
             return redirect()->route('student.dashboard');
         }
 
         return back()->withErrors(['email' => 'Invalid email or password']);
     }
 
-    // تسجيل الخروج
-    public function logout()
-    {
-        Auth::logout();
-        return redirect('/login');
-    }
+ 
+       public function logout()
+{
+    session()->forget('teacher');
+    session()->forget('student');
+    return redirect('/login');
+}
+    
 
-    // عرض صفحة تسجيل الطالب
+
     public function showStudentRegister()
     {
         return view('auth.register-student');
     }
 
-    // تسجيل الطالب
+ 
     public function registerStudent(Request $request)
     {
         $request->validate([
@@ -67,7 +68,7 @@ class AuthController extends Controller
             'yearLevel' => 'required'
         ]);
 
-        Student::create([
+        $student= Student::create([
             'sid' => $request->sid,
             'sname' => $request->sname,
             'email' => $request->email,
@@ -76,17 +77,17 @@ class AuthController extends Controller
             'yearLevel' => $request->yearLevel,
             'password' => Hash::make($request->password)
         ]);
-
-        return redirect('/login')->with('success', 'Student registered successfully!');
+         session(['student' => $student]);
+        return redirect()->route('student.dashboard')->with('success', 'Student registered successfully!');
     }
 
-    // عرض صفحة تسجيل المدرس
+
     public function showTeacherRegister()
     {
         return view('auth.register-teacher');
     }
 
-    // تسجيل المدرس
+
     public function registerTeacher(Request $request)
     {
         $request->validate([
@@ -99,7 +100,7 @@ class AuthController extends Controller
             'specialization' => 'required'
         ]);
 
-        Teacher::create([
+        $teacher= Teacher::create([
             'tid' => $request->tid,
             'tname' => $request->tname,
             'email' => $request->email,
@@ -108,7 +109,7 @@ class AuthController extends Controller
             'specialization' => $request->specialization,
             'password' => Hash::make($request->password)
         ]);
-
-        return redirect('/login')->with('success', 'Teacher registered successfully!');
+        session(['teacher'=> $teacher]);
+        return redirect()->route('teacher.dashboard')->with('success', 'Teacher registered successfully!');
     }
 }

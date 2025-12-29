@@ -6,35 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('enrollment', function (Blueprint $table) {
-            $table->char('sid', 5);  // مفتاح أجنبي إلى students
-            $table->char('cid', 5);  // مفتاح أجنبي إلى courses
+            $table->char('sid', 5);  
+            $table->char('cid', 5);  
 
-            $table->primary(['sid', 'cid']);  // المفتاح الأساسي مركب
+            $table->primary(['sid', 'cid']);  
 
-            // المفاتيح الأجنبية
             $table->foreign('sid')
                   ->references('sid')
                   ->on('students')
-                  ->onDelete('cascade');  // حذف السجل إذا تم حذف الطالب
+                  ->onDelete('cascade');  
 
             $table->foreign('cid')
                   ->references('cid')
                   ->on('courses')
-                  ->onDelete('cascade');  // حذف السجل إذا تم حذف الكورس
+                  ->onDelete('cascade');
 
-            $table->timestamps();  // لتتبع وقت التسجيل
+            $table->timestamps(); 
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('enrollment');

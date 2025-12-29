@@ -57,18 +57,19 @@
 </nav>
 
 <div class="container mt-4">
-    <h2>Welcome, {{ Auth::user()->tname }}</h2>
-
+ <h2>Welcome, {{ session('teacher')->tname ?? 'Teacher' }}</h2>
     <div class="row">
-        <!-- Profile Card -->
+
         <div class="col-md-6">
             <div class="card p-3">
                 <h5>Profile Information</h5>
-                <p><strong>ID:</strong> {{ Auth::user()->tid }}</p>
-                <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
-                <p><strong>Phone:</strong> {{ Auth::user()->phone }}</p>
-                <p><strong>Address:</strong> {{ Auth::user()->address }}</p>
-                <p><strong>Specialization:</strong> {{ Auth::user()->specialization }}</p>
+
+
+<p><strong>ID:</strong> {{ session('teacher')->tid ?? '' }}</p>
+<p><strong>Email:</strong> {{ session('teacher')->email ?? '' }}</p>
+<p><strong>Phone:</strong> {{ session('teacher')->phone ?? '' }}</p>
+<p><strong>Address:</strong> {{ session('teacher')->address ?? '' }}</p>
+<p><strong>Specialization:</strong> {{ session('teacher')->specialization ?? '' }}</p>
             </div>
         </div>
     </div>

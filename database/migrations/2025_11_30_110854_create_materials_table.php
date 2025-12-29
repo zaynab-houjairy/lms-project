@@ -6,28 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+  
    public function up(): void
     {
         Schema::create('materials', function (Blueprint $table) {
-            $table->char('mid', 5)->primary();        // مفتاح أساسي
-            $table->string('title', 70);             // عنوان المادة
-            $table->char('cid', 5);                   // مفتاح أجنبي إلى courses
+            $table->char('mid', 5)->primary();   
+            $table->string('title', 70);          
+            $table->char('cid', 5);                  
 
-            // المفتاح الأجنبي
+           
             $table->foreign('cid')
                   ->references('cid')
                   ->on('courses')
-                  ->onDelete('cascade');             // حذف المادة عند حذف الكورس
+                  ->onDelete('cascade');       
 
-            $table->timestamps();                      // created_at و updated_at
+            $table->timestamps();                     
         });
     }
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('materials');
